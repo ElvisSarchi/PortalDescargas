@@ -1,0 +1,52 @@
+---
+import Input from "./Input.astro";
+
+const metodo = () => {
+  console.log(`hola`);
+};
+---
+
+<form onsubmit={metodo} class="rounded-xl p-5 border m-5">
+  <div>
+    <img src="/SaciApp.svg" class="bg-white py-2 px-5 rounded-lg" />
+  </div>
+  <!-- Email input -->
+  <div class="relative mb-6 mt-5">
+    <Input
+      label="RUC"
+      placeholder="Ingrese su RUC"
+      id="ruc"
+      name="ruc"
+      type="text"
+    />
+  </div>
+
+  <!-- Password input -->
+  <div class="relative mb-6">
+    <Input
+      label="Contraseña"
+      placeholder="Ingrese su contraseña"
+      id="password"
+      type="password"
+      name="password"
+    />
+  </div>
+
+  <div class="mb-6 flex items-center justify-between">
+    <!-- Remember me checkbox -->
+    <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]"></div>
+
+    <!--Forgot password link-->
+    <a href="#!">¿Olvido su contraseña?</a>
+  </div>
+
+  <!-- Login button -->
+  <button
+    type="button"
+    class="rounded-xl py-2 px-4 bg-saciblue text-white hover:bg-saciblue/80 w-full"
+  >
+    Ingresar
+  </button>
+
+  <!-- Register link -->
+</form>

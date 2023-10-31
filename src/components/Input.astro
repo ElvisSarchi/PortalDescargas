@@ -2,13 +2,22 @@
 interface Props {
   label: string;
   placeholder: string;
-  id: any;
-  type: any;
+  id: string;
+  type: "text" | "email" | "number" | "password" | "tel";
   name: string;
   required?: boolean;
+  props?: any;
 }
 
-const { label, id, placeholder, type, name, required } = Astro.props;
+const {
+  label,
+  id,
+  placeholder,
+  type = "text",
+  name,
+  required = false,
+  props = {},
+} = Astro.props;
 ---
 
 <div class="flex flex-col">
@@ -20,5 +29,6 @@ const { label, id, placeholder, type, name, required } = Astro.props;
     id={id}
     name={name}
     required={required}
+    {...props}
   />
 </div>

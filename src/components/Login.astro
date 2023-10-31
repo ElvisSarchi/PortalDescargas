@@ -1,12 +1,8 @@
 ---
 import Input from "./Input.astro";
-
-const metodo = () => {
-  console.log(`hola`);
-};
 ---
 
-<form onsubmit={metodo} class="rounded-xl p-5 border m-5">
+<form class="rounded-xl p-5 border m-5">
   <div>
     <img src="/SaciApp.svg" class="bg-white py-2 px-5 rounded-lg" />
   </div>
@@ -18,6 +14,10 @@ const metodo = () => {
       id="ruc"
       name="ruc"
       type="text"
+      props={{
+        maxlength: "13",
+        oninput: "this.value = this.value.replace(/[^0-9]/g, '')",
+      }}
     />
   </div>
 
@@ -42,7 +42,7 @@ const metodo = () => {
 
   <!-- Login button -->
   <button
-    type="button"
+    id="btnlogin"
     class="rounded-xl py-2 px-4 bg-saciblue text-white hover:bg-saciblue/80 w-full"
   >
     Ingresar
@@ -50,3 +50,20 @@ const metodo = () => {
 
   <!-- Register link -->
 </form>
+<script>
+  import API from "../Hooks/API.js";
+  const btnlogin = document.getElementById("btnlogin");
+  btnlogin.addEventListener("click", (e) => {
+    e.preventDefault();
+    const ruc = document.getElementById("ruc").value;
+    const password = document.getElementById("password").value;
+    API.login({ ruc, password }).then((res) => {
+      console.log(res)
+      if (res.status === 200) {
+        window.location.href = "/dashboard";
+      } else {
+        alert("Credenciales incorrectas");
+      }
+    });
+  });
+</script>

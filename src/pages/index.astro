@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Login from "../components/Login.astro";
+import Login from "../components/Login";
 ---
 
   <Layout title="Portal Descargas SaciAPP">
@@ -12,7 +12,7 @@ import Login from "../components/Login.astro";
       >
         <div class="col-span-2 hidden md:block">imagen 1</div>
         <div class="flex items-center mb-20">
-          <Login />
+          <Login client:load />
         </div>
       </div>
     </main>

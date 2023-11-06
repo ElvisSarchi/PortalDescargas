@@ -2,8 +2,8 @@
 interface Props {
   title: string;
 }
-
 const { title } = Astro.props;
+import ValidateToken from '../Hooks/localStorage';
 ---
 
 <!doctype html>
@@ -16,8 +16,15 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
-    <slot />
+  <ValidateToken client:only />
+  <body class="h-screen">
+    <header class="bg-red-500 text-white p-10"></header>
+    <div class="flex flex-row bg-yellow-400">
+      <div class="bg-blue-500 flex flex-col">menu</div>
+      <div class="flex flex-1">
+        <slot />
+      </div>
+    </div>
   </body>
 </html>
 <style is:global>

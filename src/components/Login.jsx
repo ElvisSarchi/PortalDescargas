@@ -3,8 +3,7 @@ import Input from "./Input";
 import Spinner from "./Spinner";
 import API from "../Hooks/API";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const [state, setState] = useState({
@@ -31,14 +30,16 @@ export default function Login() {
       console.log(resp);
       if (resp.status === 200) {
         toast.success("Bienvenido");
+        localStorage.setItem("token", `dasdsad`);
         setTimeout(() => {
-          //window.location.href = "/dashboard";
+          window.location.href = "/dashboard";
         }, 2000);
       } else {
         toast.error("Usuario o contraseña incorrectos");
       }
     } catch (error) {
       console.log(error);
+      toast.error(error.message || "Error al iniciar sesión");
     } finally {
       setState({ ...state, isLoading: false });
     }

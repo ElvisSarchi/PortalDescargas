@@ -7,11 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const [state, setState] = useState({
-    ruc: "",
+    identification: "",
     password: "",
     isLoading: false,
   });
-  const { ruc, password, isLoading } = state;
+  const { identification, password, isLoading } = state;
   const handleChange = (e) => {
     setState({
       ...state,
@@ -26,7 +26,7 @@ export default function Login() {
   const onLogin = async (e) => {
     try {
       setState({ ...state, isLoading: true });
-      const resp = await API.login({ ruc, password });
+      const resp = await API.login({ identification, password });
       console.log(resp);
       if (resp.status === 200) {
         toast.success("Bienvenido");
@@ -64,14 +64,14 @@ export default function Login() {
       </div>
       <div class="relative mb-6 mt-5">
         <Input
-          label="RUC"
-          placeholder="Ingrese su RUC"
-          id="ruc"
-          name="ruc"
+          label="Usuario"
+          placeholder="Ingrese su cedula o ruc"
+          id="identification"
+          name="identification"
           type="text"
           maxLength={13}
           pattern="[0-9]*"
-          value={ruc}
+          value={identification}
           onChange={handleChange}
           onKeyPress={(e) => {
             if (isNaN(e.key) || e.key.trim().length === 0) {

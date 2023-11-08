@@ -26,27 +26,21 @@ export default function Login() {
   const onLogin = async (e) => {
     try {
       setState({ ...state, isLoading: true });
-      const resp = await API.login({ identification, password });
-      console.log(resp);
-      if (resp.status === 200) {
-        toast.success("Bienvenido");
-        localStorage.setItem("token", `dasdsad`);
-        setTimeout(() => {
-          window.location.href = "/dashboard";
-        }, 2000);
-      } else {
-        toast.error("Usuario o contraseña incorrectos");
-      }
+      const { token } = await API.login({ identification, password });
+      console.log(token);
+      toast.success("Bienvenido");
+      window.location.href = "/dashboard";
+      localStorage.setItem("token", token);
     } catch (error) {
       console.log(error);
-      toast.error(error.message || "Error al iniciar sesión");
+      toast.error(error?.response?.data?.error || "Error al iniciar sesión");
     } finally {
       setState({ ...state, isLoading: false });
     }
   };
 
   return (
-    <div class="rounded-xl p-5 border m-5">
+    <div className="rounded-xl p-5 border m-5">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -60,9 +54,9 @@ export default function Login() {
         theme="colored"
       />
       <div>
-        <img src="/SaciApp.svg" class="bg-white py-2 px-5 rounded-lg" />
+        <img src="/SaciApp.svg" className="bg-white py-2 px-5 rounded-lg" />
       </div>
-      <div class="relative mb-6 mt-5">
+      <div className="relative mb-6 mt-5">
         <Input
           label="Usuario"
           placeholder="Ingrese su cedula o ruc"
@@ -81,7 +75,7 @@ export default function Login() {
         />
       </div>
 
-      <div class="relative mb-6">
+      <div className="relative mb-6">
         <Input
           label="Contraseña"
           placeholder="Ingrese su contraseña"
@@ -93,8 +87,8 @@ export default function Login() {
         />
       </div>
 
-      <div class="mb-6 flex items-center justify-between">
-        <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]"></div>
+      <div className="mb-6 flex items-center justify-between">
+        <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]"></div>
 
         <a href="#!">¿Olvido su contraseña?</a>
       </div>
@@ -105,7 +99,7 @@ export default function Login() {
         <button
           id="btnlogin"
           onClick={onLogin}
-          class="rounded-xl py-2 px-4 bg-saciblue text-white hover:bg-saciblue/80 w-full"
+          className="rounded-xl py-2 px-4 bg-saciblue text-white hover:bg-saciblue/80 w-full"
         >
           Ingresar
         </button>

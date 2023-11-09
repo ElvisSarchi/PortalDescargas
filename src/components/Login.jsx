@@ -26,11 +26,11 @@ export default function Login() {
   const onLogin = async (e) => {
     try {
       setState({ ...state, isLoading: true });
-      const { token } = await API.login({ identification, password });
-      console.log(token);
+      const { token, user } = await API.login({ identification, password });
       toast.success("Bienvenido");
       window.location.href = "/dashboard";
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.error || "Error al iniciar sesión");
@@ -84,6 +84,11 @@ export default function Login() {
           name="password"
           value={password}
           onChange={handleChange}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              onLogin();
+            }
+          }}
         />
       </div>
 

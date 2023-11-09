@@ -6,6 +6,7 @@ export default {
       colors: {
         saciblue: "#1D2355",
         sacired: `#E01E26`,
+        saciblack: "#13151a",
       },
     },
   },

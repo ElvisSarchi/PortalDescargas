@@ -1,6 +1,5 @@
 export default function Header() {
   function cerrarSesion() {
-    console.log("Cerrar Sesión");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "/";
@@ -8,9 +7,10 @@ export default function Header() {
   return (
     <div
       className="
-    flex justify-end p-5
+    flex justify-between p-5
     "
     >
+      <img src="/SaciApp.svg" className="bg-white p-2 h-10 rounded-lg" />
       <button
         onClick={cerrarSesion}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

@@ -5,7 +5,6 @@ const axiosInstance = axios.create({
 });
 const requestHandler = (config) => {
   const token = localStorage.getItem(`token`) ?? ``;
-  console.log(token);
   config.headers.Authorization = `Bearer ${token}`;
   return config;
 };
@@ -29,5 +28,6 @@ const API = {};
 
 API.login = (payload) => axiosInstance.post("/portalDocs", payload);
 API.verify = () => axiosInstance.get("/portalDocs/me");
+API.getDocuments = () => axiosInstance.get("/portalDocs/getDocuments");
 
 export default API;

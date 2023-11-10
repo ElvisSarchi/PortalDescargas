@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import API from "../../Hooks/API";
 import DocumentList from "./DocumentList";
 import useStateWithMerge from "../../Hooks/useStateWithMerge";
+import { BulletList } from 'react-content-loader'
 
 export default function Dashboard() {
   const [state, setState] = useStateWithMerge({
@@ -13,9 +14,7 @@ export default function Dashboard() {
     try {
       setState({ isLoading: true });
       const { documents } = await API.getDocuments();
-      console.log(documents);
       setState({ data: documents });
-      console.log(state);
     } catch (error) {
       console.log(error);
     } finally {
@@ -25,10 +24,16 @@ export default function Dashboard() {
   useEffect(() => {
     fetchData();
   }, []);
-
+ 
   return (
     <div>
-      {isLoading ? <p>Cargando...</p> : <DocumentList documents={data} />}
+      {isLoading ? (
+        <div>
+          <BulletList height={300} width="100%" uniqueKey="my-random" />
+        </div>
+      ) : (
+        <DocumentList documents={data} />
+      )}
     </div>
   );
 }

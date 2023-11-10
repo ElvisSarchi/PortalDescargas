@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Item from './Item';
 
 const DocumentList = ({ documents }) => {
   const itemsPerPage = 10;
@@ -24,7 +25,7 @@ const DocumentList = ({ documents }) => {
       <h2>Document List</h2>
       <ul>
         {paginatedDocuments.map((document, index) => (
-          <li key={index}>{JSON.stringify(document)}</li>
+          <Item key={index} item={document} />
         ))}
       </ul>
       <div>

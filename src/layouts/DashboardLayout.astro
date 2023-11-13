@@ -23,7 +23,7 @@ import LeftBar from "../components/LeftBar";
     <body class="h-screen">
       <Header client:only />
       <div class="flex flex-row justify-stretch ">
-        <div class="flex border justify-stretch">
+        <div class="border justify-stretch hidden md:flex">
           <LeftBar client:only />
         </div>
 
@@ -48,7 +48,7 @@ import LeftBar from "../components/LeftBar";
     }
     html {
       font-family: system-ui, sans-serif;
-      background: #13151a;
+      background: #18191A;
       background-size: 224px;
       color-scheme: dark light;
     }

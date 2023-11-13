@@ -1,7 +1,8 @@
 import axios from "axios";
 
+const baseURL = import.meta.env.PUBLIC_URL + "/api/v1";
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.PUBLIC_URL + "/api/v1",
+  baseURL,
 });
 const requestHandler = (config) => {
   const token = localStorage.getItem(`token`) ?? ``;
@@ -18,6 +19,15 @@ const responseHandler = (response) => {
     return Promise.reject(error);
   }
 };
+const axiosInstancedos = axios.create({
+  baseURL,
+  validateStatus() {
+    return true;
+  },
+});
+axiosInstancedos.interceptors.request.use(requestHandler, (error) =>
+  Promise.reject(error)
+);
 axiosInstance.interceptors.request.use(requestHandler, (error) =>
   Promise.reject(error)
 );
@@ -29,5 +39,9 @@ const API = {};
 API.login = (payload) => axiosInstance.post("/portalDocs", payload);
 API.verify = () => axiosInstance.get("/portalDocs/me");
 API.getDocuments = () => axiosInstance.get("/portalDocs/getDocuments");
+API.getPDF = (payload) =>
+  axiosInstancedos.post(`/portalDocs/getPDF`, payload, {
+    responseType: `arraybuffer`,
+  });
 
 export default API;

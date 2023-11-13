@@ -12,7 +12,7 @@ const LeftBar = () => {
   console.log(window.location.pathname);
   const path = window.location.pathname;
   return (
-    <div className="py-2 px-4 overflow-auto">
+    <div className="py-2 px-4 overflow-aut bg-saciblackCont">
       <h2>Bienvenido</h2>
       <h3 className="font-bold">{name}</h3>
       <ul className="mt-5">

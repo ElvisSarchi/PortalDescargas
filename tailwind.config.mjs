@@ -7,6 +7,7 @@ export default {
         saciblue: "#1D2355",
         sacired: `#E01E26`,
         saciblack: "#13151a",
+        saciblackCont: "#242526",
       },
     },
   },

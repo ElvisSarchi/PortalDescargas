@@ -3,19 +3,22 @@ import { Tooltip } from "react-tooltip";
 import useStateWithMerge from "../../Hooks/useStateWithMerge";
 import API from "../../Hooks/API";
 import Spin from "../ui/spin";
-
+import { Alert, toast } from "../ui/Alert";
+import { DocumentTypes } from "../../constants";
 export default function Item({ item }) {
   const [state, setState] = useStateWithMerge({
     isLoadingPDF: false,
+    isLoadingXML: false,
   });
-  const typeDocument = item?.typeDocument || `FACTURA`;
+  const typeDocument = item?.typeDocument || `Factura`;
   const company = item?.companyId || {};
   const numDocument = `${item?.serie}-${item?.sequential}` || ``;
   const emisionDate = moment(item?.emissionDate).format("DD-MM-YYYY") || ``;
   const electronicAccessKey = item?.electronicAccessKey || ``;
   const id = item?._id || null;
+  const isCanceled = item?.isCanceled || false;
 
-  const { isLoadingPDF } = state;
+  const { isLoadingPDF, isLoadingXML } = state;
 
   async function getPDF() {
     try {
@@ -42,11 +45,66 @@ export default function Item({ item }) {
       setState({ isLoadingPDF: false });
     }
   }
+  async function getXML() {
+    try {
+      setState({ isLoadingXML: true });
+      const resp = await API.getXML({
+        id,
+        typeDocument,
+        electronicAccessKey,
+      });
+      console.log(resp);
+      if (resp.status === 404) {
+        toast.error("No se encontro el archivo XML");
+        return;
+      }
+      if (resp.status === 500) {
+        toast.error("El XML ya no se encuentra en el SRI");
+        return;
+      }
+      if (resp.status === 200) {
+        const url = window.URL.createObjectURL(new Blob([resp.data]));
+        // Crea un enlace temporal y lo simula haciendo clic para iniciar la descarga
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${numDocument}.xml`;
+        document.body.appendChild(a); // Necesario para Firefox
+        a.click();
+        document.body.removeChild(a); // Limpia el elemento después de la descarga
+
+        // Libera la URL del Blob
+        window.URL.revokeObjectURL(url);
+      } else {
+        toast.error("Error al descargar el archivo XML");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setState({ isLoadingXML: false });
+    }
+  }
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-4 border dark:bg-saciblackCont rounded-xl shadow-lg p-2 mt-2 gap-4 items-center text-sm">
+      <Alert />
+      <div className="grid grid-cols-2 md:grid-cols-4 border dark:bg-saciblackCont dark:hover:bg-saciblackCont/40 rounded-xl shadow-lg p-2 mt-2 gap-4 items-center text-sm">
         <div className="">
-          <p>{typeDocument}</p>
+          {isCanceled ? (
+            <p className="bg-red-500/80 rounded-md px-2 py-1 max-w-max">{typeDocument} Anulada</p>
+          ) : (
+            <p
+              className={`
+            ${typeDocument === DocumentTypes.NumberingInvoice ? "bg-blue-500/80" : ""}
+            ${typeDocument === DocumentTypes.NumberingCreditNote ? "bg-yellow-500/80" : ""}
+            ${typeDocument === DocumentTypes.NumberingDebitNote ? "bg-cyan-500/80" : ""}
+            ${typeDocument === DocumentTypes.NumberingRetention ? "bg-purple-500/80" : ""}
+            ${typeDocument === DocumentTypes.NumberingReferralGuide ? "bg-orange-500/80" : ""}
+            ${typeDocument === DocumentTypes.NumberingPurchaseSettlement ? "bg-pink-500/80" : ""}
+            rounded-md text-white px-2 py-1 max-w-max
+            `}
+            >
+              {typeDocument}
+            </p>
+          )}
           <p>{numDocument}</p>
         </div>
         <div>
@@ -63,13 +121,18 @@ export default function Item({ item }) {
           <p className="break-words">{electronicAccessKey}</p>
         </div>
         <div className="flex flex-row gap-4 justify-center md:justify-start col-span-2">
-          <img
-            data-tooltip-id="tooltip"
-            data-tooltip-content="Descargar XML"
-            src="/xml.svg"
-            alt="xml"
-            className="text-current w-10 bg-white rounded-md cursor-pointer hover:scale-110 delay-75"
-          />
+          {isLoadingXML ? (
+            <Spin />
+          ) : (
+            <img
+              data-tooltip-id="tooltip"
+              data-tooltip-content="Descargar XML"
+              src="/xml.svg"
+              alt="xml"
+              className="text-current w-8 bg-white rounded-md cursor-pointer hover:scale-110 delay-75"
+              onClick={getXML}
+            />
+          )}
           {isLoadingPDF ? (
             <Spin />
           ) : (
@@ -78,7 +141,7 @@ export default function Item({ item }) {
               data-tooltip-content="Descargar PDF"
               src="/pdf.svg"
               alt="pdf"
-              className="w-10 bg-white rounded-md cursor-pointer hover:scale-110 delay-75"
+              className="w-8 bg-white rounded-md cursor-pointer hover:scale-110 delay-75"
               onClick={getPDF}
             />
           )}

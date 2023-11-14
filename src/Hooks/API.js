@@ -43,5 +43,9 @@ API.getPDF = (payload) =>
   axiosInstancedos.post(`/portalDocs/getPDF`, payload, {
     responseType: `arraybuffer`,
   });
+API.getXML = (payload) =>
+  axiosInstancedos.post(`/portalDocs/getXML`, payload, {
+    responseType: `arraybuffer`,
+  });
 
 export default API;

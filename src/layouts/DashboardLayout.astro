@@ -3,13 +3,12 @@ interface Props {
   title: string;
 }
 const { title } = Astro.props;
-import { UserProvider } from "../context/UserContext";
 import Header from "../components/Heder";
 import LeftBar from "../components/LeftBar";
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -18,39 +17,26 @@ import LeftBar from "../components/LeftBar";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <UserProvider client:only>
-    <!--  <ValidateToken client:only /> -->
-    <body class="h-screen">
-      <Header client:only />
-      <div class="flex flex-row justify-stretch ">
-        <div class="border items-stretch hidden md:flex">
-          <LeftBar client:only />
-        </div>
-
-        <div class="flex flex-1 p-2 border">
-          <slot />
-        </div>
+  <!--  <ValidateToken client:only /> -->
+  <body class="h-screen bg-sacilight dark:bg-saciblack">
+    <Header client:only />
+    <div class="flex flex-row justify-stretch">
+      <div class="border items-stretch hidden md:flex">
+        <LeftBar client:only />
       </div>
-    </body>
-  </UserProvider>
+
+      <div class="flex flex-1 p-2 border bg-sacilight dark:bg-saciblack text-gray-900 dark:text-white">
+        <slot />
+      </div>
+    </div>
+  </body>
 
   <style is:global>
     :root {
-      --accent: 136, 58, 234;
-      --accent-light: 224, 204, 250;
-      --accent-dark: 49, 10, 101;
-      --accent-gradient: linear-gradient(
-        45deg,
-        rgb(var(--accent)),
-        rgb(var(--accent-light)) 30%,
-        white 60%
-      );
     }
     html {
       font-family: system-ui, sans-serif;
-      background: #18191A;
-      background-size: 224px;
-      color-scheme: dark light;
+      color-scheme: light dark;
     }
     code {
       font-family:
@@ -65,3 +51,22 @@ import LeftBar from "../components/LeftBar";
     }
   </style>
 </html>
+
+<script is:inline>
+  const theme = (() => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  })();
+
+  if (theme === "light") {
+    document.documentElement.classList.remove("dark");
+  } else {
+    document.documentElement.classList.add("dark");
+  }
+  window.localStorage.setItem("theme", theme);
+</script>

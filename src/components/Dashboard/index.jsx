@@ -25,9 +25,9 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="">
       {isLoading ? (
-        <div className="flex flex-1 justify-center items-center">
+        <div className="flex flex-1 justify-center items-center ">
           <div className="loader"></div>
         </div>
       ) : (

@@ -86,19 +86,49 @@ export default function Item({ item }) {
   return (
     <>
       <Alert />
-      <div className="grid grid-cols-2 md:grid-cols-4 border dark:bg-saciblackCont dark:hover:bg-saciblackCont/40 rounded-xl shadow-lg p-2 mt-2 gap-4 items-center text-sm">
+      <div
+        className="grid grid-cols-2 md:grid-cols-4 border bg-sacilightCont
+      dark:bg-saciblackCont dark:hover:bg-saciblackCont/40 hover:bg-sacilightCont/40 rounded-xl shadow-lg p-2 mt-2 
+      gap-2 items-center text-sm"
+      >
         <div className="">
           {isCanceled ? (
-            <p className="bg-red-500/80 rounded-md px-2 py-1 max-w-max">{typeDocument} Anulada</p>
+            <p className="bg-red-500/80 rounded-md px-2 py-1 max-w-max">
+              {typeDocument} Anulada
+            </p>
           ) : (
             <p
               className={`
-            ${typeDocument === DocumentTypes.NumberingInvoice ? "bg-blue-500/80" : ""}
-            ${typeDocument === DocumentTypes.NumberingCreditNote ? "bg-yellow-500/80" : ""}
-            ${typeDocument === DocumentTypes.NumberingDebitNote ? "bg-cyan-500/80" : ""}
-            ${typeDocument === DocumentTypes.NumberingRetention ? "bg-purple-500/80" : ""}
-            ${typeDocument === DocumentTypes.NumberingReferralGuide ? "bg-orange-500/80" : ""}
-            ${typeDocument === DocumentTypes.NumberingPurchaseSettlement ? "bg-pink-500/80" : ""}
+            ${
+              typeDocument === DocumentTypes.NumberingInvoice
+                ? "bg-blue-500/80"
+                : ""
+            }
+            ${
+              typeDocument === DocumentTypes.NumberingCreditNote
+                ? "bg-yellow-500/80"
+                : ""
+            }
+            ${
+              typeDocument === DocumentTypes.NumberingDebitNote
+                ? "bg-cyan-500/80"
+                : ""
+            }
+            ${
+              typeDocument === DocumentTypes.NumberingRetention
+                ? "bg-purple-500/80"
+                : ""
+            }
+            ${
+              typeDocument === DocumentTypes.NumberingReferralGuide
+                ? "bg-orange-500/80"
+                : ""
+            }
+            ${
+              typeDocument === DocumentTypes.NumberingPurchaseSettlement
+                ? "bg-pink-500/80"
+                : ""
+            }
             rounded-md text-white px-2 py-1 max-w-max
             `}
             >

@@ -73,7 +73,7 @@ const DocumentList = ({ documents }) => {
         <input
           id="search"
           name="search"
-          className="rounded-lg p-2 text-sm w-96"
+          className="rounded-lg p-2 text-sm w-96 bg-sacilightCont dark:bg-saciblackCont border focus:outline-none"
           placeholder="Buscar por documento, fecha, clave acceso o emisor"
           type="search"
           value={search}
@@ -103,7 +103,7 @@ const DocumentList = ({ documents }) => {
             <img
               src="/arrow-left.svg"
               alt="arrow-left"
-              className="w-8 bg-white rounded-lg "
+              className="w-8 rounded-lg dark:bg-white bg-blue-500/50"
             />
           </button>
           <span>{`${currentPage} de ${totalPages}`}</span>
@@ -114,7 +114,7 @@ const DocumentList = ({ documents }) => {
             <img
               src="/arrow-right.svg"
               alt="arrow-left"
-              className="w-8 bg-white rounded-lg "
+              className="w-8 dark:bg-white bg-blue-500/50 rounded-lg "
             />
           </button>
         </div>

@@ -89,7 +89,7 @@ export default function Item({ item }) {
       <div
         className="grid grid-cols-2 md:grid-cols-4 border bg-sacilightCont
       dark:bg-saciblackCont dark:hover:bg-saciblackCont/40 hover:bg-sacilightCont/40 rounded-xl shadow-lg p-2 mt-2 
-      gap-2 items-center text-sm"
+      gap-1 items-center text-sm"
       >
         <div className="">
           {isCanceled ? (
@@ -148,7 +148,7 @@ export default function Item({ item }) {
 
         <div className="col-span-2">
           <p className="text-xs">Clave de Acceso:</p>
-          <p className="break-words">{electronicAccessKey}</p>
+          <div className="break-words">{electronicAccessKey}</div>
         </div>
         <div className="flex flex-row gap-4 justify-center md:justify-start col-span-2">
           {isLoadingXML ? (

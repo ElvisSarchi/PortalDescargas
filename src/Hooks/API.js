@@ -47,5 +47,7 @@ API.getXML = (payload) =>
   axiosInstancedos.post(`/portalDocs/getXML`, payload, {
     responseType: `arraybuffer`,
   });
+API.updateProfile = (payload) =>
+  axiosInstance.post(`/portalDocs/updateProfile`, payload);
 
 export default API;

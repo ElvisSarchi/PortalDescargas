@@ -3,7 +3,7 @@
     /* the size is adjusted using font-size,
        this is not transform scale,
        so you can choose any size */
-    --container-width: 2.925em;
+    --container-width: 2.025em;
     --container-height: 1.1em;
     --container-radius: 1.25em;
     /* radius 0 - minecraft mode :) */

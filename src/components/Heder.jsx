@@ -5,6 +5,7 @@ import LeftBar from "./LeftBar";
 import SwitchTheme from "./ui/SwitchTheme";
 import { useEffect } from "react";
 import { useStoreDocuments } from "../store";
+import Logout from "./ui/logout";
 export default function Header() {
   const [state, setState] = useStateWithMerge({
     isOpen: false,
@@ -47,7 +48,7 @@ export default function Header() {
   return (
     <div
       className="
-    flex justify-between p-5 bg-sa dark:bg-saciblackCont bg-sacilightCont dark:text-white items-center
+    flex justify-between p-5 flex-1 w-full dark:bg-saciblackCont bg-sacilightCont dark:text-white items-center border-b dark:border-saciblack
     "
     >
       <img
@@ -63,7 +64,6 @@ export default function Header() {
         direction="left"
         width="auto"
         size={224}
-        
         style={{
           backgroundColor: theme === "dark" ? "#242526" : "#ffffff",
         }}
@@ -80,12 +80,7 @@ export default function Header() {
       </Drawer>
       <div className="gap-2 items-center flex">
         <SwitchTheme />
-        <button
-          onClick={cerrarSesion}
-          className="dark:bg-sacired/80 bg-sacired hover:bg-sacired/80 hover:dark:bg-sacired text-white font-bold py-2 px-4 rounded"
-        >
-          Cerrar Sesión
-        </button>
+        <Logout onClick={cerrarSesion} />
       </div>
     </div>
   );

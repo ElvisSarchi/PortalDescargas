@@ -16,19 +16,29 @@ import LeftBar from "../components/LeftBar";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    
   </head>
   <!--  <ValidateToken client:only /> -->
-  <body class="h-screen bg-sacilight dark:bg-saciblack">
-    <Header client:only />
-    <div class="flex flex-row justify-stretch">
-      <div class="border items-stretch hidden md:flex">
-        <LeftBar client:only />
+  <body class="bg-sacilight dark:bg-saciblack cont dark:text-white text-gray-900">
+    <header class="sticky top-0">
+      <Header client:only/>
+    </header>
+    <aside>
+      <LeftBar client:only  />
+    </aside>
+    <main>
+      <slot />
+    </main>
+    <!-- <div class="flex flex-row">
+      <div class="hidden md:flex md:sticky md:top-16">
+        
       </div>
-
-      <div class="flex flex-1 p-2 border bg-sacilight dark:bg-saciblack text-gray-900 dark:text-white">
-        <slot />
+      <div
+        class="flex w-full p-2 bg-sacilight dark:bg-saciblack text-gray-900 dark:text-white"
+      >
+      <slot />
       </div>
-    </div>
+    </div> -->
   </body>
 
   <style is:global>
@@ -37,6 +47,39 @@ import LeftBar from "../components/LeftBar";
     html {
       font-family: system-ui, sans-serif;
       color-scheme: light dark;
+    }
+    .cont {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+      grid-template-areas:
+        "header"
+        "content";
+    }
+    .cont header {
+      grid-area: header;
+    }
+    .cont aside {
+      grid-area: sidebar;
+      display: none;
+    }
+    .cont main {
+      grid-area: content;
+      padding: 1rem;
+    }
+    @media (min-width: 640px) {
+      .cont {
+        grid-template-columns: auto 1fr 1fr 1fr;
+        grid-template-rows: auto 1fr;
+        min-height: 100vh;
+        grid-template-areas:
+          "header header header header"
+          "sidebar content content content";
+      }
+      .cont aside {
+        display: block;
+      }
     }
     code {
       font-family:

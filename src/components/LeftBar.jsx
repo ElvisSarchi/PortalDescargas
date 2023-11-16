@@ -1,3 +1,5 @@
+import { useStoreDocuments } from "../store";
+
 const LeftBar = () => {
   // Ejemplo de elementos del menú
   const menuItems = [
@@ -5,22 +7,22 @@ const LeftBar = () => {
     { id: 2, title: "Perfil", link: "/perfil" },
     // Puedes agregar más elementos al menú
   ];
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useStoreDocuments((state) => state);
   const { name, identification } = user;
   //imprirmir en consola la ruta actual
   const path = window.location.pathname;
   return (
-    <div className="py-2 px-4 overflow-aut bg-sacilightCont dark:bg-saciblackCont w-56 text-gray-900 dark:text-white">
+    <div className="py-2 px-4 overflow-aut h-full bg-sacilightCont dark:bg-saciblackCont w-56 text-gray-900 dark:text-white">
       <h2>Bienvenido</h2>
-      <h3 className="font-bold">{name}</h3>
+      <h2 className="font-semibold text-lg">{name}</h2>
       <ul className="mt-5">
         {menuItems.map((item) => (
           <li className="my-5" key={item.id}>
             <a
               className={
                 path === item.link
-                  ? `rounded-lg bg-cyan-500/70 p-2`
-                  : `hover:bg-cyan-500/70 rounded-lg p-2`
+                  ? `rounded-lg dark:bg-white text-gray-900 bg-saciMenu p-2`
+                  : `hover:dark:bg-white hover:text-gray-900 hover:bg-saciMenu rounded-lg p-2`
               }
               href={item.link}
             >

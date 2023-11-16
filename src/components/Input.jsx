@@ -11,9 +11,9 @@ export default function Input({
 }) {
   return (
     <div className="flex flex-col">
-      <label className="">{label}</label>
+      <label className="text-gray-900">{label}</label>
       <input
-        className="rounded-md p-2"
+        className="rounded-md p-2 bg-gray-300 text-gray-900 focus:outline-none"
         type={type}
         placeholder={placeholder}
         value={value}

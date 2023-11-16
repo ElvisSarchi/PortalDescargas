@@ -5,9 +5,7 @@
     width: 1em;
     height: 1em;
   }
-  
-
-  
+    
   .spinner .spinner-blade {
     position: absolute;
     left: 0.4629em;
@@ -20,6 +18,19 @@
     -ms-transform-origin: center -0.2222em;
     transform-origin: center -0.2222em;
     animation: spinner-fade9234 1s infinite linear;
+  }
+  .dark .spinner .spinner-blade {
+    position: absolute;
+    left: 0.4629em;
+    bottom: 0;
+    width: 0.074em;
+    height: 0.2777em;
+    border-radius: 0.0555em;
+    background-color: transparent;
+    -webkit-transform-origin: center -0.2222em;
+    -ms-transform-origin: center -0.2222em;
+    transform-origin: center -0.2222em;
+    animation: spinner-fade9234-dark 1s infinite linear;
   }
   
   .spinner .spinner-blade:nth-child(1) {
@@ -117,12 +128,22 @@
     -ms-transform: rotate(330deg);
     transform: rotate(330deg);
   }
+
   
   @keyframes spinner-fade9234 {
     0% {
-      background-color: white;
+      background-color: #000;
     }
   
+    100% {
+      background-color: transparent;
+    }
+  }
+  @keyframes spinner-fade9234-dark {
+    0% {
+      background-color: #fff;
+    }
+
     100% {
       background-color: transparent;
     }

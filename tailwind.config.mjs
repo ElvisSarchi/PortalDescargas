@@ -11,6 +11,7 @@ export default {
         saciblackCont: "#242526",
         sacilight: "#F0F2F5",
         sacilightCont: "#FFFFFF",
+        saciMenu: "#C8DCFF",
       },
     },
   },

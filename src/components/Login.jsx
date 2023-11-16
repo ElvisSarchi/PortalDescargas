@@ -4,6 +4,7 @@ import Spinner from "./Spinner";
 import API from "../Hooks/API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Spin from "./ui/spin";
 
 export default function Login() {
   const [state, setState] = useState({
@@ -19,10 +20,6 @@ export default function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(state);
-  };
   const onLogin = async (e) => {
     try {
       setState({ ...state, isLoading: true });
@@ -40,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="rounded-xl p-5 border m-5">
+    <div className="p-5 m-5">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -54,7 +51,7 @@ export default function Login() {
         theme="colored"
       />
       <div>
-        <img src="/SaciApp.svg" className="bg-white py-2 px-5 rounded-lg" />
+        <img src="/SaciApp.svg" className="py-2 px-5 rounded-lg" />
       </div>
       <div className="relative mb-6 mt-5">
         <Input
@@ -92,14 +89,10 @@ export default function Login() {
         />
       </div>
 
-      <div className="mb-6 flex items-center justify-between">
-        <div className="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]"></div>
-
-        <a href="#!">¿Olvido su contraseña?</a>
-      </div>
-
       {isLoading ? (
-        <Spinner />
+        <div className="flex flex-1 justify-center">
+          <Spin />
+        </div>
       ) : (
         <button
           id="btnlogin"

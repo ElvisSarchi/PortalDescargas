@@ -49,5 +49,7 @@ API.getXML = (payload) =>
   });
 API.updateProfile = (payload) =>
   axiosInstance.post(`/portalDocs/updateProfile`, payload);
+API.updatePassword = (payload) =>
+  axiosInstance.post(`/portalDocs/updatePassword`, payload);
 
 export default API;

@@ -1,7 +1,6 @@
 import { create } from "zustand";
-import API from "../Hooks/API";
 
-export const useStoreDocuments = create(async (set) => ({
+export const useStoreDocuments = create( (set) => ({
   theme: localStorage.getItem("theme") || "light",
   user: JSON.parse(localStorage.getItem("user")) || {},
   toggleTheme: (e) => {
@@ -17,7 +16,7 @@ export const useStoreDocuments = create(async (set) => ({
     set(() => ({ user: user }));
     localStorage.setItem("user", JSON.stringify(user));
   },
-  documents: await API.getDocuments(),
+  documents: [],
   setDocuments: (documents) => set(() => ({ documents: documents })),
 }));
 

@@ -4,13 +4,13 @@
        this is not transform scale,
        so you can choose any size */
     --container-width: 2.025em;
-    --container-height: 1.1em;
-    --container-radius: 1.25em;
+    --container-height: 0.8em;
+    --container-radius: 1em;
     /* radius 0 - minecraft mode :) */
     --container-light-bg: #3D7EAE;
     --container-night-bg: #1D1F2C;
-    --circle-container-diameter: 1em;
-    --sun-moon-diameter: 1em;
+    --circle-container-diameter: 0.6em;
+    --sun-moon-diameter: 0.6em;
     --sun-bg: #ECCA2F;
     --moon-bg: #C4C9D1;
     --spot-color: #959DB1;

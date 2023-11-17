@@ -1,18 +1,42 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Login from "../components/Login";
+import Footer from "../components/Footer.astro";
+//crear un numero rando de 1 al 4 cada vez que cargue la pagina
+const random = Math.floor(Math.random() * 4) + 1;
 ---
 
 <Layout title="Portal Descargas SaciAPP">
   <main class="mx-auto
 		w-full
 		h-screen">
-    <div
-      class="grid grid-cols-1 md:grid-cols-3 w-full min-h-screen h-full"
-    >
-      <div class="col-span-2 bg-saciblue hidden md:block">imagen 1</div>
-      <div class="flex items-center bg-sacilight justify-center">
+    <div class="grid grid-cols-1 md:grid-cols-5 w-full min-h-screen h-full">
+      <div
+        class="col-span-3 bg-saciblue hidden md:flex md:justify-center md:items-center md:flex-col"
+      >
+        <!--  <div
+        class="col-span-2 bg-gradient-to-t from-[#BCC1C5] to-[#D9D8DA] hidden md:flex md:justify-center md:items-center md:flex-col"
+      > -->
+        <div class="flex justify-center flex-col items-center gap-10">
+          <h1 class="text-5xl text-center text-white font-bold">
+            Portal Descargas SaciAPP
+          </h1>
+          <picture class="justify-center items-center flex flex-1">
+            <img
+              src={`/docs${random}.svg`}
+              alt="Portal Descargas SaciAPP"
+              class="w-1/2 object-cover rounded-lg"
+            />
+          </picture>
+          <p>texto de dasdnhasjkdb jkdbsajdh gajks</p>
+        </div>
+      </div>
+      <div class="col-span-2 flex items-center flex-col bg-sacilight justify-center">
         <Login client:load />
+        <!-- añadir un footer de power by -->
+        <div class="absolute w-max bottom-5">
+          <Footer />
+        </div>
       </div>
     </div>
   </main>

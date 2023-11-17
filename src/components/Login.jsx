@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="p-5 m-5">
+    <div className="max-w-[290px] ">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -50,7 +50,7 @@ export default function Login() {
         pauseOnHover
         theme="colored"
       />
-      <div>
+      <div className="mb-16">
         <img src="/SaciApp.svg" className="py-2 px-5 rounded-lg" />
       </div>
       <div className="relative mb-6 mt-5">
@@ -97,7 +97,7 @@ export default function Login() {
         <button
           id="btnlogin"
           onClick={onLogin}
-          className="rounded-xl py-2 px-4 bg-saciblue text-white hover:bg-saciblue/80 w-full"
+          className="rounded-md py-2 px-4 bg-saciblue/90 text-white hover:bg-saciblue w-full"
         >
           Ingresar
         </button>

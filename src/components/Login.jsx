@@ -37,7 +37,7 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-[290px] ">
+    <div className="max-w-[290px] mb-32">
       <ToastContainer
         position="top-right"
         autoClose={5000}

@@ -10,7 +10,7 @@ export default function InputReact({
     <div class="flex w-full flex-col gap-1">
       <span className="text-sm">{label}:</span>
       <input
-        className="p-1 rounded-lg dark:bg-gray-500/50 bg-zinc-300 w-full border dark:border-gray-950 
+        className="p-1 rounded-lg dark:bg-gray-500/50 bg-gray-200 w-full border dark:border-gray-950 
         focus:outline-none focus:border-black "
         required=""
         type={type}

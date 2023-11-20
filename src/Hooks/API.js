@@ -13,9 +13,14 @@ const responseHandler = (response) => {
   const {
     data: { data, error, success },
   } = response;
+  console.log(response);
   if (success) {
     return data;
   } else {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem(`token`);
+      return (window.location.href = `/`);
+    }
     return Promise.reject(error);
   }
 };
@@ -31,9 +36,10 @@ axiosInstancedos.interceptors.request.use(requestHandler, (error) =>
 axiosInstance.interceptors.request.use(requestHandler, (error) =>
   Promise.reject(error)
 );
-axiosInstance.interceptors.response.use(responseHandler, (error) =>
-  Promise.reject(error)
-);
+axiosInstance.interceptors.response.use(responseHandler, (error) => {
+  console.log(error);
+  return Promise.reject(error);
+});
 const API = {};
 
 API.login = (payload) => axiosInstance.post("/portalDocs", payload);

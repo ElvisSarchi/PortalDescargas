@@ -3,9 +3,9 @@ import API from "../../Hooks/API";
 import DocumentList from "./DocumentList";
 import useStateWithMerge from "../../Hooks/useStateWithMerge";
 import Spinner from "../Spinner";
-import { useStoreDocuments } from "../../store";
+import useStoreDocs from "../../store/user";
 export default function Dashboard() {
-  const { documents, setDocuments } = useStoreDocuments((state) => state);
+  const { docs: documents, setDocs: setDocuments } = useStoreDocs((state) => state);
   const [state, setState] = useStateWithMerge({
     data: documents,
     isLoading: false,
@@ -23,10 +23,16 @@ export default function Dashboard() {
       setState({ isLoading: false });
     }
   }
+  console.log(documents);
   useEffect(() => {
-    console.log(documents);
-    if(documents.length > 0) return;
-    fetchData();
+    if (documents.length === 0) fetchData();
+    const unsubscribe = useStoreDocs.subscribe(
+      ({ docs }) => {
+        setState({ data: docs });
+      },
+      (state) => state
+    );
+    return () => unsubscribe();
   }, []);
 
   return (

@@ -3,8 +3,10 @@ interface Props {
   title: string;
 }
 const { title } = Astro.props;
+import ValidateToken from "../Hooks/localStorage";
 import Header from "../components/Heder";
 import LeftBar from "../components/LeftBar";
+
 ---
 
 <!doctype html>
@@ -16,14 +18,15 @@ import LeftBar from "../components/LeftBar";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
-    
   </head>
-  <!--  <ValidateToken client:only /> -->
-  <body class="bg-sacilight dark:bg-saciblack cont dark:text-white text-gray-900">
+  <!-- <ValidateToken client:only /> -->
+  <body
+    class="bg-sacilight dark:bg-saciblack cont dark:text-white text-gray-900"
+  >
     <header class="sticky top-0">
-      <Header client:only/>
+      <Header client:only />
     </header>
-    <aside>
+    <aside >
       <LeftBar client:only  />
     </aside>
     <main>
@@ -93,23 +96,31 @@ import LeftBar from "../components/LeftBar";
         monospace;
     }
   </style>
+
+  <script is:inline>
+    const theme = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme");
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return "light";
+    })();
+
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+    window.localStorage.setItem("theme", theme);
+    //validate token
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "/";
+    }
+  </script>
 </html>
-
-<script is:inline>
-  const theme = (() => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark";
-    }
-    return "light";
-  })();
-
-  if (theme === "light") {
-    document.documentElement.classList.remove("dark");
-  } else {
-    document.documentElement.classList.add("dark");
-  }
-  window.localStorage.setItem("theme", theme);
-</script>

@@ -4,8 +4,9 @@ import useStateWithMerge from "../Hooks/useStateWithMerge";
 import LeftBar from "./LeftBar";
 import SwitchTheme from "./ui/SwitchTheme";
 import { useEffect } from "react";
-import { useStoreDocuments } from "../store";
 import Logout from "./ui/logout";
+import { useStoreDocuments } from "../store";
+import useStoreDocs from "../store/user";
 export default function Header() {
   const [state, setState] = useStateWithMerge({
     isOpen: false,
@@ -19,6 +20,7 @@ export default function Header() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "/";
+    useStoreDocs.persist.clearStorage();
   }
   useEffect(() => {
     setState({

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Input from "./Input";
 import Spinner from "./Spinner";
-import API from "../Hooks/API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Spin from "./ui/spin";
@@ -23,11 +22,24 @@ export default function Login() {
   const onLogin = async (e) => {
     try {
       setState({ ...state, isLoading: true });
-      const { token, user } = await API.login({ identification, password });
+      const resp = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ identification, password }),
+      }).then((res) => {
+        if (res.status === 400) {
+          toast.error("Usuario o contraseña incorrectos");
+          throw new Error("Usuario o contraseña incorrectos");
+        }
+        return res.json();
+      });
+      console.log(resp);
       toast.success("Bienvenido");
-      window.location.href = "/dashboard";
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+       window.location.href = "/dashboard";
+      /* localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user)); */
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.error || "Error al iniciar sesión");

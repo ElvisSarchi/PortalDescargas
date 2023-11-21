@@ -26,8 +26,8 @@ import LeftBar from "../components/LeftBar";
     <header class="sticky top-0">
       <Header client:only />
     </header>
-    <aside >
-      <LeftBar client:only  />
+    <aside>
+      <LeftBar client:only />
     </aside>
     <main>
       <slot />
@@ -115,12 +115,6 @@ import LeftBar from "../components/LeftBar";
       document.documentElement.classList.remove("dark");
     } else {
       document.documentElement.classList.add("dark");
-    }
-    window.localStorage.setItem("theme", theme);
-    //validate token
-    const token = localStorage.getItem("token");
-    if (!token) {
-      window.location.href = "/";
     }
   </script>
 </html>

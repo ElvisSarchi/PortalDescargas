@@ -4,6 +4,22 @@ import Login from "../components/Login";
 import Footer from "../components/Footer.astro";
 //crear un numero rando de 1 al 4 cada vez que cargue la pagina
 const random = Math.floor(Math.random() * 4) + 1;
+import API from "../Hooks/API";
+const { title } = Astro.props;
+const token = Astro.cookies.get("token")?.value;
+console.log(token);
+if (token) {
+  try{
+  const { verify } = API({ token });
+  const resp = await verify()
+  console.log(resp);
+  return Astro.redirect("/dashboard");
+   
+   }catch(err){
+    console.log(err);
+    Astro.cookies.delete("token");
+  }
+}
 ---
 
 <Layout title="Portal Descargas SaciAPP">
@@ -31,8 +47,10 @@ const random = Math.floor(Math.random() * 4) + 1;
           <p>texto de dasdnhasjkdb jkdbsajdh gajks</p>
         </div>
       </div>
-      <div class="col-span-2 flex items-center flex-col bg-sacilight justify-center">
-        <Login client:load />
+      <div
+        class="col-span-2 flex items-center flex-col bg-sacilight justify-center"
+      >
+        <Login client:only />
         <!-- añadir un footer de power by -->
         <div class="absolute w-max bottom-5">
           <Footer />

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Logout from "./ui/logout";
 import { useStoreDocuments } from "../store";
 import useStoreDocs from "../store/user";
-export default function Header() {
+export default function Header({ eliminarCookie = () => {} }) {
   const [state, setState] = useStateWithMerge({
     isOpen: false,
   });
@@ -16,9 +16,15 @@ export default function Header() {
   const toggleOpen = () => {
     setState({ isOpen: !isOpen });
   };
-  function cerrarSesion() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  async function cerrarSesion() {
+    
+    await fetch("/api/logout", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("cerrar sesion");
     window.location.href = "/";
     useStoreDocs.persist.clearStorage();
   }

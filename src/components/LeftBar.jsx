@@ -1,4 +1,6 @@
-import { useStoreDocuments } from "../store";
+import { useEffect } from "react";
+import useStateWithMerge from "../Hooks/useStateWithMerge";
+import { useStoreUser } from "../store/user";
 
 const LeftBar = () => {
   // Ejemplo de elementos del menú
@@ -7,10 +9,16 @@ const LeftBar = () => {
     { id: 2, title: "Perfil", link: "/perfil" },
     // Puedes agregar más elementos al menú
   ];
-  const { user } = useStoreDocuments((state) => state);
+  const [state, setState] = useStateWithMerge({
+    path: ``,
+  });
+  const { path } = state;
+  const { user } = useStoreUser((state) => state);
   const { name, identification } = user;
-  //imprirmir en consola la ruta actual
-  const path = window.location.pathname;
+
+  useEffect(() => {
+    setState({ path: window.location.pathname });
+  }, []);
   return (
     <div className="py-2 px-4 overflow-aut h-full bg-sacilightCont dark:bg-saciblackCont w-56 text-gray-900 dark:text-white">
       <h2>Bienvenido</h2>

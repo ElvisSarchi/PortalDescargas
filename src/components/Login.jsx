@@ -4,8 +4,10 @@ import Spinner from "./Spinner";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Spin from "./ui/spin";
+import { useStoreUser } from "../store/user";
 
 export default function Login() {
+  const { setUser } = useStoreUser((state) => state);
   const [state, setState] = useState({
     identification: "",
     password: "",
@@ -22,7 +24,7 @@ export default function Login() {
   const onLogin = async (e) => {
     try {
       setState({ ...state, isLoading: true });
-      const resp = await fetch("/api/login", {
+      const { user, token } = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,13 +37,13 @@ export default function Login() {
         }
         return res.json();
       });
-      console.log(resp);
+
+      setUser({ ...user, token });
       toast.success("Bienvenido");
-       window.location.href = "/dashboard";
+      window.location.href = "/dashboard";
       /* localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user)); */
     } catch (error) {
-      console.log(error);
       toast.error(error?.response?.data?.error || "Error al iniciar sesión");
     } finally {
       setState({ ...state, isLoading: false });

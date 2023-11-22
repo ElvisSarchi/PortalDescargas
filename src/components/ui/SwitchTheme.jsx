@@ -1,17 +1,38 @@
 import useStateWithMerge from "../../Hooks/useStateWithMerge";
 import "./styles.css";
-import { useStoreDocuments } from "../../store";
-export default function SwitchTheme() {
-  const { theme, toggleTheme } = useStoreDocuments((state) => state);
+export default function SwitchTheme({ themeaux = `dark` }) {
+  const [state, setState] = useStateWithMerge({
+    theme: themeaux === `dark`,
+  });
+  const { theme } = state;
+  const toggleTheme = async () => {
+    setState({
+      theme: !theme,
+    });
+    await fetch("/api/theme", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ theme: !theme }),
+    });
+
+    if (!theme) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
   return (
     <>
       <label class="theme-switch">
         <input
           type="checkbox"
-          checked={theme === "dark"}
+          checked={theme}
           onChange={toggleTheme}
           class="theme-switch__checkbox"
         />
+
         <div class="theme-switch__container">
           <div class="theme-switch__clouds"></div>
           <div class="theme-switch__stars-container">

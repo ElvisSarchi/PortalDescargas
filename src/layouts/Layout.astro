@@ -1,5 +1,4 @@
 ---
-import ValidateToken from "../Hooks/localStorage";
 interface Props {
   title: string;
 }
@@ -18,7 +17,6 @@ const { title } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <!-- <ValidateToken client:only ispublic /> -->
   <body>
     <slot />
   </body>

@@ -7,16 +7,13 @@ const random = Math.floor(Math.random() * 4) + 1;
 import API from "../Hooks/API";
 const { title } = Astro.props;
 const token = Astro.cookies.get("token")?.value;
-console.log(token);
 if (token) {
   try{
   const { verify } = API({ token });
   const resp = await verify()
-  console.log(resp);
   return Astro.redirect("/dashboard");
    
    }catch(err){
-    console.log(err);
     Astro.cookies.delete("token");
   }
 }

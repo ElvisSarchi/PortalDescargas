@@ -3,36 +3,32 @@ import "react-modern-drawer/dist/index.css";
 import useStateWithMerge from "../Hooks/useStateWithMerge";
 import LeftBar from "./LeftBar";
 import SwitchTheme from "./ui/SwitchTheme";
-import { useEffect } from "react";
 import Logout from "./ui/logout";
 import { useStoreDocuments } from "../store";
-import useStoreDocs from "../store/user";
-export default function Header({ eliminarCookie = () => {} }) {
+import { useStoreDocs, useStoreUser } from "../store/user";
+export default function Header({ themeaux = `dark` }) {
   const [state, setState] = useStateWithMerge({
     isOpen: false,
   });
-  const { theme } = useStoreDocuments((state) => state);
+  const { theme } = useStoreUser((state) => state);
   const { isOpen } = state;
   const toggleOpen = () => {
     setState({ isOpen: !isOpen });
   };
   async function cerrarSesion() {
-    
-    await fetch("/api/logout", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("cerrar sesion");
-    window.location.href = "/";
-    useStoreDocs.persist.clearStorage();
+    try {
+      await fetch("/api/logout", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      window.location.href = "/";
+      useStoreDocs.persist.clearStorage();
+    } catch (error) {
+      console.log(error);
+    }
   }
-  useEffect(() => {
-    setState({
-      theme: localStorage.getItem("theme") || "light",
-    });
-  }, [localStorage]);
 
   const MenuSVG = ({ stroke = "#ffffff", size = "30px" }) => {
     return (
@@ -87,7 +83,7 @@ export default function Header({ eliminarCookie = () => {} }) {
         </div>
       </Drawer>
       <div className="gap-2 items-center flex">
-        <SwitchTheme />
+        <SwitchTheme themeaux={themeaux} />
         <Logout onClick={cerrarSesion} />
       </div>
     </div>

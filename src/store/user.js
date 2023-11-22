@@ -9,9 +9,41 @@ const useStoreDocs = create(
     }),
     {
       name: "docs-storage", // unique name
-      storage: createJSONStorage(()=> sessionStorage),
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );
+const useStoreUser = create(
+  persist(
+    (set) => ({
+      user: {},
+      theme: null,
+      setUser: (user) => set((state) => ({ user })),
+      toggleTheme: (e) => {
+        set((state) => ({ theme: state.theme === "light" ? "dark" : "light" }));
+        if (e.target.checked) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      },
+    }),
+    {
+      name: "user-storage", // unique name
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+);
+const useStoreTheme = create((set) => ({
+  theme: null,
+  toggleTheme: (e) => {
+    set((state) => ({ theme: state.theme === "light" ? "dark" : "light" }));
+    if (e.target.checked) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  },
+}));
 
-export default useStoreDocs;
+export { useStoreDocs, useStoreUser, useStoreTheme };

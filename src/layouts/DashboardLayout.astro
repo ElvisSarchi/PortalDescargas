@@ -3,14 +3,14 @@ interface Props {
   title: string;
 }
 const { title } = Astro.props;
-import ValidateToken from "../Hooks/localStorage";
 import Header from "../components/Heder";
 import LeftBar from "../components/LeftBar";
-
+const themeaux = Astro.cookies.get("theme")?.value
+const theme = themeaux === `true` ? `dark` : `light`;
 ---
 
 <!doctype html>
-<html lang="es" class="">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -19,15 +19,14 @@ import LeftBar from "../components/LeftBar";
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <!-- <ValidateToken client:only /> -->
   <body
     class="bg-sacilight dark:bg-saciblack cont dark:text-white text-gray-900"
   >
     <header class="sticky top-0">
-      <Header client:only />
+      <Header themeaux={theme} client:load />
     </header>
     <aside>
-      <LeftBar client:only />
+      <LeftBar client:load />
     </aside>
     <main>
       <slot />
@@ -96,25 +95,21 @@ import LeftBar from "../components/LeftBar";
         monospace;
     }
   </style>
-
   <script is:inline>
-    const theme = (() => {
-      if (
-        typeof localStorage !== "undefined" &&
-        localStorage.getItem("theme")
-      ) {
-        return localStorage.getItem("theme");
-      }
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
-      return "light";
-    })();
-
-    if (theme === "light") {
-      document.documentElement.classList.remove("dark");
-    } else {
-      document.documentElement.classList.add("dark");
-    }
+    fetch("/api/theme", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const theme = res.theme === `true`;
+        if (theme) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      });
   </script>
 </html>

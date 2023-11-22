@@ -2,7 +2,6 @@ import API from "../../Hooks/API";
 export const POST = async ({request, cookies}) => {
   try{
   const { identification, password } = await request.json();
-  //console.log(identification, password);
   const {login}= API({token:``});
   const {token, user} = await login({ identification, password });
   cookies.set("token", token, {
@@ -12,7 +11,6 @@ export const POST = async ({request, cookies}) => {
     path: "/",
     expires: new Date(Date.now() + 60 * 60 * 1000),
   });
-
 
   return new Response(
     JSON.stringify({token, user}),
@@ -26,7 +24,6 @@ export const POST = async ({request, cookies}) => {
     }
   )
   }catch(error){
-    console.log(error);
     return new Response(
       JSON.stringify(error),
       {

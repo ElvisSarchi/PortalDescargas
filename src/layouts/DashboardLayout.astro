@@ -5,7 +5,7 @@ interface Props {
 const { title } = Astro.props;
 import Header from "../components/Heder";
 import LeftBar from "../components/LeftBar";
-const themeaux = Astro.cookies.get("theme")?.value
+const themeaux = Astro.cookies.get("theme")?.value;
 const theme = themeaux === `true` ? `dark` : `light`;
 ---
 
@@ -46,10 +46,11 @@ const theme = themeaux === `true` ? `dark` : `light`;
   <style is:global>
     :root {
     }
-    html {
-      font-family: system-ui, sans-serif;
-      color-scheme: light dark;
+    @import url("https://fonts.googleapis.com/css?family=Montserrat:400,900|Roboto");
+    * {
+      font-family: "Roboto", sans-serif, system-ui !important;
     }
+
     .cont {
       display: grid;
       grid-template-columns: 1fr;
@@ -96,6 +97,24 @@ const theme = themeaux === `true` ? `dark` : `light`;
     }
   </style>
   <script is:inline>
+    //validate token
+    fetch("/api/validate", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 401) {
+          window.location.href = "/";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        window.location.href = "/";
+      });
+
     fetch("/api/theme", {
       method: "GET",
       headers: {

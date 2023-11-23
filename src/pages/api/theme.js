@@ -1,7 +1,8 @@
 export const GET = async ({ request, cookies }) => {
   try {
     //console.log(identification, password);
-    const theme = cookies.get("theme").value;
+    const theme = cookies.get("theme")?.value || "light";
+
     return new Response(JSON.stringify({ theme }), {
       status: 200,
       statusText: "OK",
@@ -9,7 +10,6 @@ export const GET = async ({ request, cookies }) => {
         "content-type": "application/json",
       },
     });
-   
   } catch (error) {
     console.log(error);
     return new Response(JSON.stringify(error), {
@@ -33,28 +33,20 @@ export const POST = async ({ request, cookies }) => {
       expires: new Date(Date.now() + 60 * 60 * 1000),
     });
 
-    return new Response(
-      JSON.stringify({ theme }),
-      {
-        status: 200,
-        statusText: "OK",
-        headers: {
-          "content-type": "application/json",
-        },
-
-      }
-    )
+    return new Response(JSON.stringify({ theme }), {
+      status: 200,
+      statusText: "OK",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
   } catch (error) {
-    return new Response(
-      JSON.stringify(error),
-      {
-        status: 400,
-        statusText: "Bad Request",
-        headers: {
-          "content-type": "application/json",
-        },
-
-      }
-    )
+    return new Response(JSON.stringify(error), {
+      status: 400,
+      statusText: "Bad Request",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
   }
-}
+};

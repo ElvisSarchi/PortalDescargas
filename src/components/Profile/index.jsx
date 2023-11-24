@@ -2,13 +2,10 @@ import useStateWithMerge from "../../Hooks/useStateWithMerge";
 import InputReact from "../ui/InputReact";
 import Spin from "../ui/spin";
 import { Alert, toast } from "../ui/Alert";
-import API from "../../Hooks/API";
-import { useStoreDocuments } from "../../store";
 
-export default function Profile() {
-  const { user, setUser } = useStoreDocuments((state) => state);
+export default function Profile({ oldname = `` }) {
   const [state, setState] = useStateWithMerge({
-    name: user?.name || "",
+    name: oldname,
     isLoadingUser: false,
     isLoadingPassword: false,
     password: ``,
@@ -33,9 +30,17 @@ export default function Profile() {
   async function updateProfile() {
     try {
       setState({ isLoadingUser: true });
-      await API.updateProfile({ name });
-      setUser({ ...user, name });
+      await fetch(`/api/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+        }),
+      });
       toast.success("Usuario actualizado");
+      window.location.reload();
     } catch (error) {
       console.log(error);
       toast.error(
@@ -56,7 +61,20 @@ export default function Profile() {
     try {
       if (!validatePassword()) return;
       setState({ isLoadingPassword: true });
-      await API.updatePassword({ password, newPassword, confirmPassword });
+      const resp = await fetch(`/api/user/password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password,
+          newPassword,
+        }),
+      });
+      if (resp.status === 400) {
+        toast.error("Contraseña incorrecta");
+        return;
+      }
       toast.success("Contraseña actualizada");
     } catch (error) {
       console.log(error);
@@ -108,7 +126,10 @@ export default function Profile() {
           {isLoadingPassword ? (
             <Spin />
           ) : (
-            <button onClick={updatePassword} className="p-2 rounded-lg bg-saciblue dark:bg-blue-500 text-white">
+            <button
+              onClick={updatePassword}
+              className="p-2 rounded-lg bg-saciblue dark:bg-blue-500 text-white"
+            >
               Guardar
             </button>
           )}

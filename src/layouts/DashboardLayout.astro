@@ -7,10 +7,12 @@ import Header from "../components/Heder";
 import LeftBar from "../components/LeftBar";
 const themeaux = Astro.cookies.get("theme")?.value;
 const theme = themeaux === `true` ? `dark` : `light`;
+const user = JSON.parse(Astro.cookies.get("user")?.value);
+const name = user?.name;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class:list={[{ dark: theme === "dark" }]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content="Astro description" />
@@ -23,10 +25,10 @@ const theme = themeaux === `true` ? `dark` : `light`;
     class="bg-sacilight dark:bg-saciblack cont dark:text-white text-gray-900"
   >
     <header class="sticky top-0">
-      <Header themeaux={theme} client:load />
+      <Header themeaux={theme} name={name} client:load />
     </header>
     <aside>
-      <LeftBar client:load />
+      <LeftBar name={name} client:load />
     </aside>
     <main>
       <slot />
@@ -115,7 +117,7 @@ const theme = themeaux === `true` ? `dark` : `light`;
         window.location.href = "/";
       });
 
-    fetch("/api/theme", {
+    /*  fetch("/api/theme", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -129,6 +131,6 @@ const theme = themeaux === `true` ? `dark` : `light`;
         } else {
           document.documentElement.classList.remove("dark");
         }
-      });
+      }); */
   </script>
 </html>

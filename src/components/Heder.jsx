@@ -6,7 +6,7 @@ import SwitchTheme from "./ui/SwitchTheme";
 import Logout from "./ui/logout";
 import { useStoreDocuments } from "../store";
 import { useStoreDocs, useStoreUser } from "../store/user";
-export default function Header({ themeaux = `dark` }) {
+export default function Header({ themeaux = `dark`, name = `` }) {
   const [state, setState] = useStateWithMerge({
     isOpen: false,
   });
@@ -79,7 +79,7 @@ export default function Header({ themeaux = `dark` }) {
               className="bg-white p-2 rounded-lg md:hidden flex justify-center"
             />
           </picture>
-          <LeftBar />
+          <LeftBar name={name} />
         </div>
       </Drawer>
       <div className="gap-2 items-center flex">

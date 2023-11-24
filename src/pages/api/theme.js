@@ -11,7 +11,6 @@ export const GET = async ({ request, cookies }) => {
       },
     });
   } catch (error) {
-    console.log(error);
     return new Response(JSON.stringify(error), {
       status: 400,
       statusText: "Bad Request",

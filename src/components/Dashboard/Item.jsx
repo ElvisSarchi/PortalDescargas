@@ -1,7 +1,6 @@
 import moment from "moment";
 import { Tooltip } from "react-tooltip";
 import useStateWithMerge from "../../Hooks/useStateWithMerge";
-import API from "../../Hooks/API";
 import Spin from "../ui/spin";
 import { Alert, toast } from "../ui/Alert";
 import { DocumentTypes } from "../../constants";
@@ -23,12 +22,17 @@ export default function Item({ item }) {
   async function getPDF() {
     try {
       setState({ isLoadingPDF: true });
-      const resp = await API.getPDF({
-        id,
-        typeDocument,
+      const resp = await fetch(`/api/documents/pdf`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          typeDocument,
+        }),
       });
-      const url = window.URL.createObjectURL(new Blob([resp.data]));
-
+      const url = window.URL.createObjectURL(await resp.blob());
       // Crea un enlace temporal y lo simula haciendo clic para iniciar la descarga
       const a = document.createElement("a");
       a.href = url;
@@ -36,7 +40,6 @@ export default function Item({ item }) {
       document.body.appendChild(a); // Necesario para Firefox
       a.click();
       document.body.removeChild(a); // Limpia el elemento después de la descarga
-
       // Libera la URL del Blob
       window.URL.revokeObjectURL(url);
     } catch (error) {
@@ -48,12 +51,17 @@ export default function Item({ item }) {
   async function getXML() {
     try {
       setState({ isLoadingXML: true });
-      const resp = await API.getXML({
-        id,
-        typeDocument,
-        electronicAccessKey,
+      const resp = await fetch(`/api/documents/xml`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          typeDocument,
+          electronicAccessKey,
+        }),
       });
-      console.log(resp);
       if (resp.status === 404) {
         toast.error("No se encontro el archivo XML");
         return;
@@ -63,7 +71,7 @@ export default function Item({ item }) {
         return;
       }
       if (resp.status === 200) {
-        const url = window.URL.createObjectURL(new Blob([resp.data]));
+        const url = window.URL.createObjectURL(await resp.blob());
         // Crea un enlace temporal y lo simula haciendo clic para iniciar la descarga
         const a = document.createElement("a");
         a.href = url;

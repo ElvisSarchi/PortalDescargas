@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import useStateWithMerge from "../Hooks/useStateWithMerge";
-import { useStoreUser } from "../store/user";
 
-const LeftBar = () => {
+const LeftBar = ({ name=`` }) => {
   // Ejemplo de elementos del menú
   const menuItems = [
     { id: 1, title: "Mis Comprobantes", link: "/dashboard" },
@@ -13,8 +12,6 @@ const LeftBar = () => {
     path: ``,
   });
   const { path } = state;
-  const { user } = useStoreUser((state) => state);
-  const { name, identification } = user;
 
   useEffect(() => {
     setState({ path: window.location.pathname });

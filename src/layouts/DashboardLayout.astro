@@ -7,7 +7,7 @@ import Header from "../components/Heder";
 import LeftBar from "../components/LeftBar";
 const themeaux = Astro.cookies.get("theme")?.value;
 const theme = themeaux === `true` ? `dark` : `light`;
-const user = JSON.parse(Astro.cookies.get("user")?.value);
+const user = JSON.parse(Astro.cookies.get("user")?.value || null);
 const name = user?.name;
 ---
 

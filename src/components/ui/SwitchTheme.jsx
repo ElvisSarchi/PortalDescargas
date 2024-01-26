@@ -1,9 +1,11 @@
 import useStateWithMerge from "../../Hooks/useStateWithMerge";
+import { useStoreDocuments } from "../../store";
 import "./styles.css";
 export default function SwitchTheme({ themeaux = `dark` }) {
   const [state, setState] = useStateWithMerge({
     theme: themeaux === `dark`,
   });
+  const { theme: themedocs, setTheme } = useStoreDocuments((state) => state);
   const { theme } = state;
   const toggleTheme = async () => {
     setState({
@@ -19,7 +21,9 @@ export default function SwitchTheme({ themeaux = `dark` }) {
 
     if (!theme) {
       document.documentElement.classList.add("dark");
+      setTheme("dark");
     } else {
+      setTheme("light");
       document.documentElement.classList.remove("dark");
     }
   };

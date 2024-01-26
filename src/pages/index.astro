@@ -6,14 +6,15 @@ import Footer from "../components/Footer.astro";
 const random = Math.floor(Math.random() * 4) + 1;
 import API from "../Hooks/API";
 const { title } = Astro.props;
+
 const token = Astro.cookies.get("token")?.value;
 if (token) {
-  try{
-  const { verify } = API({ token });
-  const resp = await verify()
-  return Astro.redirect("/dashboard");
-   
-   }catch(err){
+  try {
+    const { verify } = API({ token });
+    const resp = await verify();
+
+    return Astro.redirect("/dashboard");
+  } catch (err) {
     Astro.cookies.delete("token");
   }
 }
@@ -41,7 +42,9 @@ if (token) {
               class="w-1/2 object-cover rounded-lg"
             />
           </picture>
-          <p>texto de dasdnhasjkdb jkdbsajdh gajks</p>
+          <p class="text-white">
+            Portal de Descargar de Documentos recibidos, ingrese su ruc y su contraseña el mismo ruc
+          </p>
         </div>
       </div>
       <div

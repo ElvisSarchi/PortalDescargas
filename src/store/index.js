@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const useStoreDocuments = create( (set) => ({
+export const useStoreDocuments = create((set) => ({
   //theme: localStorage.getItem("theme") || "light",
   theme: "light",
   user: {},
@@ -12,11 +12,17 @@ export const useStoreDocuments = create( (set) => ({
       document.documentElement.classList.remove("dark");
     }
   },
+  setTheme: (theme) => {
+    set(() => ({ theme: theme }));
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  },
   setUser: (user) => {
     set(() => ({ user: user }));
   },
   documents: [],
   setDocuments: (documents) => set(() => ({ documents: documents })),
 }));
-
-

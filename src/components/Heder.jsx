@@ -10,11 +10,13 @@ export default function Header({ themeaux = `dark`, name = `` }) {
   const [state, setState] = useStateWithMerge({
     isOpen: false,
   });
-  const { theme } = useStoreUser((state) => state);
   const { isOpen } = state;
   const toggleOpen = () => {
     setState({ isOpen: !isOpen });
   };
+
+  const { theme } = useStoreDocuments((state) => state);
+
   async function cerrarSesion() {
     try {
       await fetch("/api/logout", {
@@ -42,9 +44,9 @@ export default function Header({ themeaux = `dark`, name = `` }) {
         <path
           d="M4 6H20M4 12H20M4 18H20"
           stroke={stroke}
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     );
@@ -72,7 +74,7 @@ export default function Header({ themeaux = `dark`, name = `` }) {
           backgroundColor: theme === "dark" ? "#242526" : "#ffffff",
         }}
       >
-        <div className="flex flex-1 flex-col">
+        <div className="flex flex-1 flex-col bg-sacilightCont dark:bg-saciblackCont">
           <picture className="p-4 cursor-pointer" onClick={toggleOpen}>
             <img
               src="/SaciApp.svg"

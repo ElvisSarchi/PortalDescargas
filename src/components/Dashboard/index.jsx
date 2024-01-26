@@ -11,17 +11,18 @@ export default function Dashboard() {
     data: documents,
     isLoading: false,
   });
+
   const { data, isLoading } = state;
   async function fetchData() {
     try {
       setState({ isLoading: true });
+      console.log("isLoading", isLoading);
       const { documents: docs } = await fetch("/api/documents", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
       }).then((res) => res.json());
-      console.log(docs);
       setDocuments(docs);
       setState({ data: docs });
     } catch (error) {

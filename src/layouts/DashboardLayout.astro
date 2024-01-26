@@ -46,11 +46,16 @@ const name = user?.name;
   </body>
 
   <style is:global>
-    :root {
+    @font-face {
+      font-family: "Roboto";
+      src: url("/fonts/Roboto-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
     }
-    @import url("https://fonts.googleapis.com/css?family=Montserrat:400,900|Roboto");
-    * {
-      font-family: "Roboto", sans-serif, system-ui !important;
+    *{
+      font-family: "Roboto", sans-serif;
+    }
+    :root {
     }
 
     .cont {

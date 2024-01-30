@@ -62,7 +62,7 @@ const name = user?.name;
       display: grid;
       grid-template-columns: 1fr;
       grid-template-rows: auto 1fr;
-      min-height: 100vh;
+      height: 100vh;
       grid-template-areas:
         "header"
         "content";
@@ -77,12 +77,14 @@ const name = user?.name;
     .cont main {
       grid-area: content;
       padding: 1rem;
+      flex-grow: 1;
+      overflow-y: auto;
     }
     @media (min-width: 640px) {
       .cont {
         grid-template-columns: auto 1fr 1fr 1fr;
         grid-template-rows: auto 1fr;
-        min-height: 100vh;
+        height: 100vh;
         grid-template-areas:
           "header header header header"
           "sidebar content content content";

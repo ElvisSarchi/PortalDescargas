@@ -73,7 +73,7 @@ const DocumentList = ({ documents }) => {
         <input
           id="search"
           name="search"
-          className="rounded-lg p-2 text-sm md:w-96 bg-sacilightCont dark:bg-saciblackCont border focus:outline-none"
+          className="rounded-lg p-2 text-sm md:w-96 bg-sacilightCont dark:bg-saciblackCont  focus:outline-none"
           placeholder="Buscar por documento, fecha, clave acceso o emisor"
           type="search"
           value={search}

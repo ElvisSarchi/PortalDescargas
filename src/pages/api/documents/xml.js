@@ -3,9 +3,9 @@ import API from "../../../Hooks/API";
 export const POST = async ({ request, cookies }) => {
   try {
     //console.log(identification, password);
-    const { id, typeDocumen, electronicAccessKey } = await request.json();
+    const { id, typeDocument, electronicAccessKey } = await request.json();
     const { getXML } = API({ token: cookies.get("token").value });
-    const resp = await getXML({ id, typeDocumen, electronicAccessKey });
+    const resp = await getXML({ id, typeDocument, electronicAccessKey });
     if (resp.status === 200) {
       return new Response(resp.data, {
         status: 200,

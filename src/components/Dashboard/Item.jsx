@@ -32,6 +32,15 @@ export default function Item({ item }) {
           typeDocument,
         }),
       });
+      console.log(resp)
+      if (resp.status === 404) {
+        toast.error("No se pudo generar el PDF");
+        return;
+      }
+      if (resp.status === 500) {
+        toast.error("No se pudo generar el PDF");
+        return;
+      }
       const url = window.URL.createObjectURL(await resp.blob());
       // Crea un enlace temporal y lo simula haciendo clic para iniciar la descarga
       const a = document.createElement("a");
@@ -95,7 +104,7 @@ export default function Item({ item }) {
     <>
       <Alert />
       <div
-        className="grid grid-cols-2 md:grid-cols-4 border bg-sacilightCont
+        className="grid grid-cols-2 md:grid-cols-4 border dark:border-gray-700 bg-sacilightCont
       dark:bg-saciblackCont dark:hover:bg-saciblackCont/40 hover:bg-sacilightCont/40 rounded-xl shadow-lg p-2 mt-2 
       gap-1 items-center text-sm"
       >

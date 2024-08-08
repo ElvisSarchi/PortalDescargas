@@ -42,14 +42,7 @@ export default function Item({ item }) {
         return;
       }
       const url = window.URL.createObjectURL(await resp.blob());
-      // Crea un enlace temporal y lo simula haciendo clic para iniciar la descarga
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${numDocument}.pdf`;
-      document.body.appendChild(a); // Necesario para Firefox
-      a.click();
-      document.body.removeChild(a); // Limpia el elemento después de la descarga
-      // Libera la URL del Blob
+      window.open(url, "_blank");
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.log(error);
@@ -185,7 +178,7 @@ export default function Item({ item }) {
           ) : (
             <img
               data-tooltip-id="tooltip"
-              data-tooltip-content="Descargar PDF"
+              data-tooltip-content="Visualizar PDF"
               src="/pdf.svg"
               alt="pdf"
               className="w-8 bg-white rounded-md cursor-pointer hover:scale-110 delay-75"
